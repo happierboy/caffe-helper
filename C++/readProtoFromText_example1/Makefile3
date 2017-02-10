@@ -1,0 +1,1 @@
+g++ caffe.pb.cc main3.cpp -o main3 -I/usr/include -L/usr/lib/x86_64-linux-gnu -lprotobuf -lgflags -pthread

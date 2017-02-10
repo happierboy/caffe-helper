@@ -1,0 +1,3 @@
+message Book{
+	required uint32 money = 1;
+}

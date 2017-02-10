@@ -1,0 +1,73 @@
+syntax = "proto2";
+
+package caffe;//c++ namespace
+
+message NetParameter {
+  optional string name = 1; // consider giving the network a name
+  repeated LayerParameter layer = 2;  // ID 100 so layers are printed last.
+}
+
+message SolverParameter {
+  optional string train_net = 1;
+  optional float base_lr = 2;
+  optional string lr_policy = 3;
+  optional NetParameter net_param = 4;
+}
+
+message ParamSpec {
+  optional string name = 1;
+  optional float lr_mult = 3 [default = 1.0];
+  optional float decay_mult = 4 [default = 1.0];
+}
+// LayerParameter next available layer-specific ID: 147 (last added: recurrent_param)
+message LayerParameter {
+  optional string name = 1; // the layer name
+  optional string type = 2; // the layer type
+  repeated string bottom = 3; // the name of each bottom blob
+  repeated string top = 4; // the name of each top blob
+  repeated ParamSpec param = 6;
+  // Layer type-specific parameters.
+  optional ConvolutionParameter convolution_param = 106;
+  optional PythonParameter python_param = 130;
+}
+
+message ConvolutionParameter {
+  optional uint32 num_output = 1; // The number of outputs for the layer
+
+  // Pad, kernel size, and stride are all given as a single value for equal
+  // dimensions in all spatial dimensions, or once per spatial dimension.
+  repeated uint32 pad = 3; // The padding size; defaults to 0
+  repeated uint32 kernel_size = 4; // The kernel size
+  repeated uint32 stride = 6; // The stride; defaults to 1
+}
+
+message PythonParameter {
+  optional string module = 1;
+  optional string layer = 2;
+  // This value is set to the attribute `param_str` of the `PythonLayer` object
+  // in Python before calling the `setup()` method. This could be a number,
+  // string, dictionary in Python dict format, JSON, etc. You may parse this
+  // string in `setup` method and use it in `forward` and `backward`.
+  optional string param_str = 3 [default = ''];
+}
+
+// The label (display) name and label id.
+message LabelMapItem {
+  // Both name and label are required.
+  optional string name = 1;
+  optional int32 label = 2;
+  // display_name is optional.
+  optional string display_name = 3;
+}
+
+message LabelMap {
+  repeated LabelMapItem item = 1;
+}
+
+// An extension of Datum which contains "rich" annotations.
+message AnnotatedDatum {
+  enum AnnotationType {
+    BBOX = 0;
+  }
+  optional AnnotationType type = 2;
+}
