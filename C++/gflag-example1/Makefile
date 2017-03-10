@@ -1,5 +1,6 @@
 LIB=/usr/lib/x86_64-linux-gnu
 INCLUDE=/usr/include
+$(info $(LIB) $(INCLUDE)) 
 test_gflags: main.o
 	g++ -o $@ $^ -L$(LIB) -lgflags -lpthread
 
