@@ -1,0 +1,9 @@
+t1 {
+  name: "zhangli"
+  type: 10
+  top: 10
+  top: 11
+  bottom: 10
+  phase: 10
+}
+manager_name: "zhangli"

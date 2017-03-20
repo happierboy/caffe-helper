@@ -1,0 +1,11 @@
+message manager {
+	message layer{
+		required string name = 1;
+		required int32 type= 2;
+		repeated int32 top = 3;
+		optional int32 bottom = 4;
+		optional int32 phase = 5;
+	}
+	required layer t1 = 1;  
+	required string manager_name = 2;
+}
