@@ -1,0 +1,2 @@
+main3: main3.cpp test.pb.cc
+	g++ $^ -o  $@ -std=c++0x -lprotobuf
