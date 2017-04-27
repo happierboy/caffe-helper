@@ -1,0 +1,3 @@
+'dog':'dog'
+'human':'human'
+'cat':'cat'
