@@ -11,7 +11,8 @@ layer {
     scale: 0.00390625
   }
   data_param {
-    source: "/home/mozat/workspace/Caffe-Mnist/mnist-data/train_lmdb"
+    #source: "/home/mozat/caffe-study/Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/train_lmdb"
+    source: "/home/mozat/caffe-study/Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/mnist_train_lmdb"
     batch_size: 64
     backend: LMDB
   }
@@ -28,7 +29,8 @@ layer {
     scale: 0.00390625
   }
   data_param {
-    source: "/home/mozat/workspace/Caffe-Mnist/mnist-data/validate_lmdb"
+    #source: "/home/mozat/caffe-study/Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/validate_lmdb"
+    source: "/home/mozat/caffe-study/Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/mnist_test_lmdb"
     batch_size: 100
     backend: LMDB
   }

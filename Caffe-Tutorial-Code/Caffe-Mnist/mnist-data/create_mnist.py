@@ -7,6 +7,7 @@ import os, sys
 import numpy as np
 import lmdb
 import struct
+import caffe
 from caffe.proto import caffe_pb2
 import logging
 import gflags
@@ -73,6 +74,7 @@ def write_lmdb():
                                     data = image.tobytes())
             in_txt.put('{:0>5d}'.format(in_idx), datum.SerializeToString())
             logging.info('writeing {in_idx} image'.format(in_idx = in_idx))
+            in_idx = in_idx + 1
     in_db.close()
     print 'finishing processing mniste validation dataset'
     
@@ -84,12 +86,14 @@ def read_lmdb():
         datum = caffe_pb2.Datum()
         for key, value in cursor:
             datum.ParseFromString(value)
+            data= caffe.io.datum_to_array(datum)
+            print data.shape
             label = datum.label
             image = np.fromstring(datum.data, dtype=np.uint8)
-            x = image.reshape(datum.height, datum.width)
-            print x.shape
-            pyplot.imshow(x, cmap = 'gray')
-            pyplot.show()
+#             x = image.reshape(datum.height, datum.width)
+#             print x.shape
+#             pyplot.imshow(x, cmap = 'gray')
+#             pyplot.show()
             print key, label, datum.channels, datum.height, datum.width
     pass
 

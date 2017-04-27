@@ -7,7 +7,7 @@ layer {
     scale: 0.00392156862745
   }
   data_param {
-    source: "/home/mozat/workspace/Caffe-Mnist/mnist-data/train_lmdb"
+    source: "/home/mozat/caffe-study/Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/train_lmdb"
     batch_size: 64
     backend: LMDB
   }
