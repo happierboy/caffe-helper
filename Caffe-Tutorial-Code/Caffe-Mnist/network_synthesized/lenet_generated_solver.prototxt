@@ -1,0 +1,14 @@
+train_net: "/home/mozat/caffe-study/Caffe-Tutorial-Code/network_synthesized/lenet_train_py.prototxt"
+test_net: "/home/mozat/caffe-study/Caffe-Tutorial-Code/network_synthesized/lenet_test_py.prototxt"
+test_iter: 100
+test_interval: 500
+base_lr: 0.001
+display: 100
+max_iter: 5000
+lr_policy: "inv"
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 5000
+snapshot_prefix: "lenet_train/lenet_train"
+solver_mode: GPU
+type: "SGD"
