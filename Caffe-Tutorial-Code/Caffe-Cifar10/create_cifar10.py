@@ -57,7 +57,7 @@ def main(argv):
         
     #remove all directory
     train_dir = 'cifar10_train_%s'%DBTYPE
-    test_dir = 'cifar10_test%s'%DBTYPE
+    test_dir = 'cifar10_test_%s'%DBTYPE
     for data_dir in [train_dir, test_dir]:
         os.system('rm -rf ' + data_dir)
 
@@ -88,7 +88,7 @@ def main(argv):
 #         read_python_data(batch_filename)
     data = unpickle(batch_filename)
     with in_db.begin(write=True) as in_txt:
-        for idx, filename in enumerate(data['filenames']):
+        for idx, _ in enumerate(data['filenames']):
             R = data['data'][idx][0:kCIFARSize*kCIFARSize]
             G = data['data'][idx][kCIFARSize*kCIFARSize:kCIFARSize*kCIFARSize*2]
             B = data['data'][idx][kCIFARSize*kCIFARSize*2:]

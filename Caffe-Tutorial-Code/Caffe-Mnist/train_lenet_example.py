@@ -31,7 +31,7 @@ def train():
     caffe.set_mode_gpu()
     solver = caffe.SGDSolver('./network/lenet_single_solver.prototxt')
     niter = 500
-    test_interval = 25
+    test_interval = 100
     train_loss = np.zeros(niter)
     test_acc = np.zeros(int(np.ceil(niter/test_interval)))
     output = np.zeros((niter, 8, 10))

@@ -4,4 +4,5 @@ Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/validate_lmdb
 Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/train_lmdb
 Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/mnist_test_lmdb
 Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/mnist_train_lmdb
-
+*.png
+*.jpg
