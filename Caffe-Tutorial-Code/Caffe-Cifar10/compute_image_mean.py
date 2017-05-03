@@ -64,6 +64,7 @@ def convert_mean(train_dir):
     meanImg = np.transpose(mean_im.astype(np.uint8), (2, 3, 1, 0))
     print meanImg.shape
     cv2.imwrite("mean.png", meanImg[:,:,:,0])
+    #write blobproto to file
     blob = caffe.io.array_to_blobproto(mean_im)
     with open("mean.binaryproto", "wb") as f:
         f.write(blob.SerializeToString())

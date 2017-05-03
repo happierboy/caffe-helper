@@ -8,3 +8,4 @@ Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/mnist_train_lmdb
 *.jpg
 *.lmdb
 *.mdb
+*.caffemodel
