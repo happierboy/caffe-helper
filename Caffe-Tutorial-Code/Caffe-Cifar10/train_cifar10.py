@@ -34,7 +34,7 @@ print test_batch_size
 caffe.set_device(0)
 caffe.set_mode_gpu()
 solver = caffe.SGDSolver('./network/cifar10_quick_solver.prototxt')
-niter = 5000
+niter = 8000
 test_interval = 500
 train_loss = np.zeros(niter)
 test_acc = np.zeros(int(np.ceil(niter/test_interval)))
