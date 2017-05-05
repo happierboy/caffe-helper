@@ -30,17 +30,22 @@ test_batch_size = net_param.layer[1].data_param.batch_size
 print test_batch_size
 
 
-#start to train
+#start to train  at the first stage
 caffe.set_device(0)
 caffe.set_mode_gpu()
 solver = caffe.SGDSolver('./network/cifar10_quick_solver.prototxt')
-niter = 8000
+niter = 10000
 test_interval = 500
 train_loss = np.zeros(niter)
 test_acc = np.zeros(int(np.ceil(niter/test_interval)))
 
 output = np.zeros((niter, 8, 10)) #see solver.net.blobs['ip2'].data.shape
 for it in range(niter):
+    if it == 4000:
+        del solver
+        solver = caffe.SGDSolver('./network/cifar10_quick_solver_lr1.prototxt')
+        solver.net.copy_from('./snapshot/cifar10_quick_iter_4000.caffemodel')
+        pass
     solver.step(1) #SGD by caffe
     train_loss[it] = solver.net.blobs['loss'].data
     solver.test_nets[0].forward(start='conv1')

@@ -40,4 +40,7 @@ def main():
     caffe.draw.draw_net_to_file(net, Flags.output_image_file, Flags.rankdir, phase)
 
 if __name__ == '__main__':
+#     sys.argv.append('--input_net_proto_file=network/cifar10_quick.prototxt')
+#     sys.argv.append('--output_image_file=network/cifar10_quick.png')
+    sys.argv.append('--phase=TEST')
     main()

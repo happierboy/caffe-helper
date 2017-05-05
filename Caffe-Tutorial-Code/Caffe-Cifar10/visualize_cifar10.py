@@ -32,10 +32,14 @@ def show_data(data, padsize=1,padval=0, title_name = ''):#tuple multiplcation is
 
 # #init network
 caffe.set_mode_gpu()
-net = caffe.Net('./network/cifar10_quick_train_test.prototxt', 
-                './snapshot/cifar10_quick_iter_8000.caffemodel',
+net = caffe.Net(#'./network/cifar10_quick_train_test.prototxt',
+                './network/cifar10_quick.prototxt',
+                #'./snapshot/cifar10_quick_iter_5000.caffemodel',
+                './snapshot/cifar10_quick_iter_5000.caffemodel.h5',
                 caffe.TEST)
 #  
+for k, v in net.blobs.items():
+    print (k,v.data.shape) 
 # blobs_shape = [(k,v.data.shape) for k, v in net.blobs.items()]
 # print blobs_shape
 #  
@@ -56,13 +60,13 @@ net = caffe.Net('./network/cifar10_quick_train_test.prototxt',
 # img = cv2.imread('cat1.jpg')
 # cv2.imshow("cat.jpg", img)
 # cv2.waitKey()
-# img = caffe.io.load_image('cat1.jpg') #This will directly read to RGB colorspace
-img = cv2.imread('cat1.jpg') #read to BGR colorspace
-img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-img = np.asarray(img, dtype=np.float32)/255
-plt.imshow(img)
-plt.axis('off')
-plt.show()
+img = caffe.io.load_image('cat.jpg') #This will directly read to RGB colorspace
+# img = cv2.imread('cat1.jpg') #read to BGR colorspace
+# img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+# img = np.asarray(img, dtype=np.float32)/255
+# plt.imshow(img)
+# plt.axis('off')
+# plt.show()
 
 #read binary bin file
 binMean = './mean.binaryproto'
@@ -70,11 +74,10 @@ blob = caffe_pb2.BlobProto()
 bin_mean = open(binMean, 'rb').read()
 blob.ParseFromString(bin_mean)
 arr = caffe.io.blobproto_to_array(blob)
-print arr.shape
+# print arr.shape
 npy_mean = np.load('mean.npy')
-print npy_mean.shape
-print np.array_equal(arr, npy_mean)
-
+# print npy_mean.shape
+# print np.array_equal(arr, npy_mean)
 
 #convert img and subtract mean
 print net.blobs['data'].data.shape
@@ -84,7 +87,7 @@ transformer.set_mean('data', npy_mean[0].mean(1).mean(1)) #R, G, B mean value 1*
 transformer.set_raw_scale('data', 255)  #blob_value = input_data * scale
 transformer.set_channel_swap('data', (2,1,0)) #from RGB to BGR, as orginal mean is BGR
 net.blobs['data'].data[...] = transformer.preprocess('data', img)
-net.blobs['data'].reshape(1,3,32,32)
+# net.blobs['data'].reshape(1,3,32,32)
 inputData=net.blobs['data'].data
 
 plt.figure()
@@ -94,26 +97,34 @@ plt.axis('off')
 plt.subplot(1,2,2),plt.title("subtract mean")
 plt.imshow(transformer.deprocess('data', inputData[0])) #reverse the process
 plt.axis('off')
-plt.show()
-
+# plt.show()
 
 net.forward()
-print net.blobs['conv1'].data[0].shape
-show_data(net.blobs['conv1'].data[0])
-print net.params['conv1'][0].data.shape
-show_data(net.params['conv1'][0].data.reshape(32*3, 5, 5), 'conv1_data')
-print net.blobs['pool1'].data.shape
-show_data(net.blobs['pool1'].data[0])
-print net.blobs['conv2'].data.shape
-show_data(net.blobs['conv2'].data[0],padval=0.5)
-print net.params['conv2'][0].data.shape
-show_data(net.params['conv2'][0].data.reshape(32**2,5,5))
-print net.blobs['conv3'].data.shape
-show_data(net.blobs['conv3'].data[0],padval=0.5)
-print net.params['conv3'][0].data.shape
-show_data(net.params['conv3'][0].data.reshape(64*32,5,5)[:1024])
-print net.blobs['pool3'].data.shape
-show_data(net.blobs['pool3'].data[0],padval=0.2)
+
+print "visualize the prob"
 feat = net.blobs['prob'].data[0]
 print feat
 plt.plot(feat.flat)
+
+print "visualize the blob data"
+print 'blob conv1', net.blobs['conv1'].data[0].shape
+show_data(net.blobs['conv1'].data[0],1,0,'conv1')
+print "blob pool1", net.blobs['pool1'].data.shape
+show_data(net.blobs['pool1'].data[0],1,0,'pool1')
+print "blob conv2", net.blobs['conv2'].data.shape
+show_data(net.blobs['conv2'].data[0],1, 0.5, 'conv2')
+print "blob pool2", net.blobs['pool2'].data.shape
+show_data(net.blobs['pool2'].data[0],1,0.5, 'pool2')
+print "blob conv3", net.blobs['conv3'].data.shape
+show_data(net.blobs['conv3'].data[0],1, 0.5, 'conv3')
+print "blob pool3", net.blobs['pool3'].data.shape
+show_data(net.blobs['pool3'].data[0],1, 0.2, 'pool3')
+
+print "visulize the param data"
+print "conv1 param weight", net.params['conv1'][0].data.shape
+show_data(net.params['conv1'][0].data.reshape(32*3, 5, 5), 1,0,'conv1_data')
+print "conv2 param weight", net.params['conv2'][0].data.shape
+show_data(net.params['conv2'][0].data.reshape(32**2,5,5), 1,0,'conv2 params')
+print "conv3 param weight", net.params['conv3'][0].data.shape
+show_data(net.params['conv3'][0].data.reshape(64*32,5,5)[:1024], 1,0, 'conv3 params')
+

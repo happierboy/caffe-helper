@@ -1,37 +1,9 @@
-name: "CIFAR10_quick"
+name: "CIFAR10_quick_test"
 layer {
-  name: "cifar"
-  type: "Data"
+  name: "data"
+  type: "Input"
   top: "data"
-  top: "label"
-  include {
-    phase: TRAIN
-  }
-  transform_param {
-    mean_file: "/home/mozat/caffe-study/Caffe-Tutorial-Code/Caffe-Cifar10/mean.binaryproto"
-  }
-  data_param {
-    source: "/home/mozat/caffe-study/Caffe-Tutorial-Code/Caffe-Cifar10/cifar10_train_lmdb"
-    batch_size: 100
-    backend: LMDB
-  }
-}
-layer {
-  name: "cifar"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-    phase: TEST
-  }
-  transform_param {
-    mean_file: "/home/mozat/caffe-study/Caffe-Tutorial-Code/Caffe-Cifar10/mean.binaryproto"
-  }
-  data_param {
-    source: "/home/mozat/caffe-study/Caffe-Tutorial-Code/Caffe-Cifar10/cifar10_test_lmdb"
-    batch_size: 100
-    backend: LMDB
-  }
+  input_param { shape: { dim: 1 dim: 3 dim: 32 dim: 32 } }
 }
 layer {
   name: "conv1"
@@ -49,13 +21,6 @@ layer {
     pad: 2
     kernel_size: 5
     stride: 1
-    weight_filler {
-      type: "gaussian"
-      std: 0.0001
-    }
-    bias_filler {
-      type: "constant"
-    }
   }
 }
 layer {
@@ -91,13 +56,6 @@ layer {
     pad: 2
     kernel_size: 5
     stride: 1
-    weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
-    bias_filler {
-      type: "constant"
-    }
   }
 }
 layer {
@@ -133,13 +91,6 @@ layer {
     pad: 2
     kernel_size: 5
     stride: 1
-    weight_filler {
-      type: "gaussian"
-      std: 0.01
-    }
-    bias_filler {
-      type: "constant"
-    }
   }
 }
 layer {
@@ -172,13 +123,6 @@ layer {
   }
   inner_product_param {
     num_output: 64
-    weight_filler {
-      type: "gaussian"
-      std: 0.1
-    }
-    bias_filler {
-      type: "constant"
-    }
   }
 }
 layer {
@@ -194,29 +138,11 @@ layer {
   }
   inner_product_param {
     num_output: 10
-    weight_filler {
-      type: "gaussian"
-      std: 0.1
-    }
-    bias_filler {
-      type: "constant"
-    }
   }
 }
 layer {
-  name: "accuracy"
-  type: "Accuracy"
+  name: "prob"
+  type: "Softmax"
   bottom: "ip2"
-  bottom: "label"
-  top: "accuracy"
-  include {
-    phase: TEST
-  }
-}
-layer {
-  name: "loss"
-  type: "SoftmaxWithLoss"
-  bottom: "ip2"
-  bottom: "label"
-  top: "loss"
+  top: "prob"
 }
