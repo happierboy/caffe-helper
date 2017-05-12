@@ -20,6 +20,3 @@ with open(in_txt, 'r') as csvfile:
         shutil.copyfile(img, os.path.join(os.path.join(out_dir, label), os.path.basename(img)))
         if idx>=1000:
             break
-        
-    
-        

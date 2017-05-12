@@ -9,3 +9,4 @@ Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/mnist_train_lmdb
 *.lmdb
 *.mdb
 *.caffemodel
+*.solverstate
