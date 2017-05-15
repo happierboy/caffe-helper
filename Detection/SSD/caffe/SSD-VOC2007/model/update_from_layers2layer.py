@@ -40,5 +40,5 @@ for key, value in net.params.iteritems():
     net.params[key][0].diff[...] = params[key][0].diff[...]
     net.params[key][1].data[...] = params[key][1].data[...]
     net.params[key][1].diff[...] = params[key][1].diff[...]
-    show_data(net.params[key].data[0],1, 0.5, 'conv3')
+    show_data(net.params[key][0].data,1, 0.5, key)
 net.save(out_net_param)
