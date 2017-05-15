@@ -12,10 +12,11 @@ Flags = gflags.FLAGS
 
 gflags.DEFINE_string('filename', 'VGG16_reduced.png;VGG16.png;VGG19.png', 'output filename')
 
-models = ('VGG_ILSVRC_16_layers_fc_reduced_deploy.prototxt',
-          'VGG_ILSVRC_16_layers_deploy.prototxt',
-          'VGG_ILSVRC_19_layers_deploy.prototxt'
-          )
+models = (
+        './models/VGG_16_reduced/VGG_ILSVRC_16_layers_fc_reduced_train_val.prototxt',
+        './models/VGG_16/VGG_ILSVRC_16_layers_train_val.prototxt',
+        './models/VGG_19/VGG_ILSVRC_19_layers_train_val.prototxt'
+        )
 
 def draw_model(model_name, output_name):
     #read NetParamemters only

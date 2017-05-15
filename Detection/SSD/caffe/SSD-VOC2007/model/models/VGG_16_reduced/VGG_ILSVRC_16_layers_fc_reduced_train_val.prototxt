@@ -1,9 +1,21 @@
 name: "VGG_ILSVRC_16_layers_fc_reduced"
 layer {
   name: "data"
-  type: "Input"
+  type: "Data"
   top: "data"
-  input_param { shape: { dim: 10 dim: 3 dim: 500 dim: 500 } } 
+  top: "label"
+  include{
+    phase: TRAIN
+  }
+}
+layer {
+  name: "data"
+  type: "Data"
+  top: "data"
+  top: "label"
+  include{
+    phase: TEST
+  }
 }
 layer {
   name: "conv1_1"
@@ -345,7 +357,30 @@ layer {
 }
 layer {
   name: "loss"
-  type: "Softmax"
+  type: "SoftmaxWithLoss"
   bottom: "fc8"
-  top: "prob"
+  bottom: "label"
+  top: "loss/loss"
+}
+layer {
+  name: "accuracy/top1"
+  type: "Accuracy"
+  bottom: "fc8"
+  bottom: "label"
+  top: "accuracy@1"
+  include: { phase: TEST }
+  accuracy_param {
+    top_k: 1
+  }
+}
+layer {
+  name: "accuracy/top5"
+  type: "Accuracy"
+  bottom: "fc8"
+  bottom: "label"
+  top: "accuracy@5"
+  include: { phase: TEST }
+  accuracy_param {
+    top_k: 5
+  }
 }
