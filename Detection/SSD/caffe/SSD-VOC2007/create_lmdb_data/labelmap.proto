@@ -1,0 +1,10 @@
+syntax = "proto2";
+message SingleItem {
+	required string name = 1;
+	required int32 label = 2;
+	required string display_name = 3;
+}
+
+message LabelMap {	
+	repeated SingleItem item = 1; 
+}

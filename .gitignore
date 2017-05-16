@@ -10,3 +10,5 @@ Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/mnist_train_lmdb
 *.mdb
 *.caffemodel
 *.solverstate
+*.xml
+Detection/SSD/caffe/SSD-VOC2007/data/VOCdevkit
