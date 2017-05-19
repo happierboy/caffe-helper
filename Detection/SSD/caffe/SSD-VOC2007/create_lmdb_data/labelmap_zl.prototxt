@@ -3,8 +3,3 @@ item {
   label: 0
   display_name: "background"
 }
-item {
-  name: "aeroplane"
-  label: 1
-  display_name: "aeroplane"
-}

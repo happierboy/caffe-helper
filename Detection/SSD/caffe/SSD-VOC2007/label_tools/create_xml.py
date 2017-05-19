@@ -8,16 +8,12 @@ import sys
 import cv2
 from itertools import islice
 from xml.dom.minidom import Document, parse
-
+from xml.etree.ElementTree import ElementTree as ET
 
 labels = './BBox-Label-Tool/Labels/1'
 imgpath = './BBox-Label-Tool/Images/1' 
 xmlpath_new = './BBox-Label-Tool/Annotations/1'
 foldername='./BBox-Label-Tool'
-
-def load_xml(filename):
-    xml = parse(filename)
-    return xml
 
 def insert_object(doc, datas):
     obj = doc.createElement('object')
@@ -60,13 +56,12 @@ def create():
     for ele in os.listdir(labels):
         fidin = open(os.path.join(labels, ele), 'r')
         objIndex = 0
-        for data in islice(fidin, 1, None):
-            objIndex += 1
+        for data in fidin.readlines():
             data = data.strip('\n')
             datas = data.split(' ')
             if 5 != len(datas):
-                print 'bounding box information error'
                 continue
+            objIndex += 1
             pictureName = ele.replace('.txt', '.JPEG')
             imageFile = os.path.join(imgpath,pictureName)
             img = cv2.imread(imageFile)
@@ -128,12 +123,12 @@ def create():
                 annotation.appendChild(insert_object(doc, datas))
             else:
                 annotation.appendChild(insert_object(doc, datas))
-            try:
-                f.write(doc.toprettyxml(indent='    '))
-                f.close()
-            except:
-                pass
-        fidin.close()
+        try:
+            fidin.close()
+            f.write(doc.toprettyxml(indent='    '))
+            f.close()
+        except:
+            pass
             
 if __name__ == '__main__':
     create()
