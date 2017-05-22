@@ -17,7 +17,6 @@ for a_dir in all_dirs:
     with open(dst_file, 'w') as ofp:
         for name in names:
             dataset_file = os.path.join(os.path.join(root_dir, name), '{0}/{1}.txt'.format(sub_dir, a_dir))
-            
             if not os.path.exists(dataset_file):
                 continue
             
