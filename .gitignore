@@ -12,3 +12,4 @@ Caffe-Tutorial-Code/Caffe-Mnist/mnist-data/mnist_train_lmdb
 *.solverstate
 *.xml
 Detection/SSD/caffe/SSD-VOC2007/data/VOCdevkit
+Fashion_Data
